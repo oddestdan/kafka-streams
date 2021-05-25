@@ -38,8 +38,11 @@ run().catch((error) => {
 
 process.on('SIGINT', function () {
   consumer.stop();
-  console.log('Total processed messages: ', processedCount);
-  console.log('Saved messages', savedMessages);
+  console.log('\nTotal processed messages: ', processedCount);
+  console.log('Saved messages:', savedMessages.length);
+  console.table(
+    savedMessages.map((m) => (typeof m === 'object' ? m : JSON.parse(m)))
+  );
 });
 
 handleErrors();

@@ -29,4 +29,11 @@ function getHashCode(str, maxIdx) {
   return ((hash % maxIdx) + maxIdx) % maxIdx;
 }
 
-module.exports = { createCoords, getRandomId, getHashCode };
+function printSwapValues(v1, v2) {
+  console.log(v1);
+  console.log(`                      ⬇  ⬇  ⬇`);
+  console.log(v2);
+  console.log();
+}
+
+module.exports = { createCoords, getRandomId, getHashCode, printSwapValues };

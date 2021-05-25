@@ -18,7 +18,7 @@ const run = async () => {
   console.log('Producer is running...');
 
   await producer.connect();
-  sub$ = interval(1000)
+  sub$ = interval(200)
     .pipe(map(() => JSON.stringify(createCoords(msgId++))))
     .subscribe((coords) => {
       console.log('> ', { coords });
