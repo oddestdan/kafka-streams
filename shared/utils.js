@@ -1,9 +1,14 @@
-function createCoords(coordId) {
-  const sign = Math.round(Math.random()) ? 1 : -1;
-  const latitude = Math.round(90 * Math.random()) * sign;
-  const longitude = Math.round(180 * Math.random()) * sign;
+const faker = require('faker');
 
-  return { latitude, longitude, id: getRandomId(), coordId };
+function createCoords(coordId) {
+  const { latitude, longitude } = faker.address;
+
+  return {
+    lat: latitude(),
+    long: longitude(),
+    id: getRandomId(),
+    coordId,
+  };
 }
 
 function getRandomId() {

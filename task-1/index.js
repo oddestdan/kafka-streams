@@ -15,11 +15,13 @@ const kafka = new Kafka({
 const producer = kafka.producer();
 
 const run = async () => {
+  console.log('Producer is running...');
+
   await producer.connect();
   sub$ = interval(1000)
     .pipe(map(() => JSON.stringify(createCoords(msgId++))))
     .subscribe((coords) => {
-      console.log('Sending message...', { coords });
+      console.log('> ', { coords });
       producer.send({
         topic: 'random-coords',
         messages: [{ value: coords }],

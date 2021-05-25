@@ -1,10 +1,9 @@
 const { Kafka } = require('kafkajs');
 
-const { getHashCode } = require('../shared/utils');
 const { handleErrors } = require('./error-handling');
 
 let processedCount = 0;
-const KEY_LENGTH = 10;
+const S = 10;
 const savedMessages = [];
 const kafka = new Kafka({
   clientId: 'coords-app',
@@ -21,11 +20,17 @@ const run = async () => {
   await consumer.run({
     eachMessage: async ({ topic, partition, message }) => {
       processedCount++;
-      const obj = JSON.parse(message.value.toString());
-      const hash = getHashCode(obj.id, KEY_LENGTH);
-      if (hash === 0) {
-        console.log('> ', { ...obj });
-        savedMessages.push(obj);
+      if (processedCount < S) {
+        savedMessages.push(message.value.toString());
+      } else {
+        const shouldKeep = Math.random() < S / processedCount;
+        if (!shouldKeep) {
+          return;
+        }
+
+        console.log('> ', message.value.toString());
+        const idx = Math.floor(Math.random() * savedMessages.length);
+        savedMessages[idx] = message.value.toString();
       }
     },
   });
@@ -39,7 +44,7 @@ run().catch((error) => {
 process.on('SIGINT', function () {
   consumer.stop();
   console.log('Total processed messages: ', processedCount);
-  console.log('Saved messages', savedMessages);
+  console.log('Kept messages', savedMessages);
 });
 
 handleErrors();

@@ -1,0 +1,14 @@
+{
+  "name": "task-2",
+  "version": "0.0.0",
+  "description": "Kafka learning, task 2",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "Dan Stetsenko",
+  "license": "ISC",
+  "dependencies": {
+    "kafkajs": "^1.15.0",
+    "rxjs": "^7.1.0"
+  }
+}
