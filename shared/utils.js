@@ -36,4 +36,14 @@ function printSwapValues(v1, v2) {
   console.log();
 }
 
-module.exports = { createCoords, getRandomId, getHashCode, printSwapValues };
+function printPadded(val, padNum = 5) {
+  return val.toString().padStart(padNum, ' ');
+}
+
+module.exports = {
+  createCoords,
+  getRandomId,
+  getHashCode,
+  printSwapValues,
+  printPadded,
+};
